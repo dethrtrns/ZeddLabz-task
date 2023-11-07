@@ -5,11 +5,14 @@ import { Picker } from "@react-native-picker/picker";
 import { View } from "../components/Themed";
 import { PoppinsText } from "../components/StyledText";
 import Colors from "../constants/Colors";
+import ProductCard from "../features/shop/components/ProductCard/ProductCard";
+import { products } from "../constants/dummyDb";
 
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.categoryContainer}>
+        {/* horizontally scrollable category list */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}>
@@ -22,157 +25,43 @@ export default function ModalScreen() {
           </View>
           <View style={styles.categoryItem}>
             <Image
-              source={require("../assets/images/CategoryImgs/Ellipse17ctgryBreads.png")}
+              source={require("../assets/images/CategoryImgs/Ellipse18ctgryChoc.png")}
               style={styles.categoryImage}
             />
             <PoppinsText style={styles.categoryTitle}>Chocolates</PoppinsText>
           </View>
           <View style={styles.categoryItem}>
             <Image
-              source={require("../assets/images/CategoryImgs/Ellipse17ctgryBreads.png")}
+              source={require("../assets/images/CategoryImgs/Ellipse19ctgryGrains.png")}
               style={styles.categoryImage}
             />
             <PoppinsText style={styles.categoryTitle}>Grains</PoppinsText>
           </View>
           <View style={styles.categoryItem}>
             <Image
-              source={require("../assets/images/CategoryImgs/Ellipse17ctgryBreads.png")}
+              source={require("../assets/images/CategoryImgs/Ellipse20ctgryVeg.png")}
               style={styles.categoryImage}
             />
             <PoppinsText style={styles.categoryTitle}>Vegetables</PoppinsText>
           </View>
           <View style={styles.categoryItem}>
             <Image
-              source={require("../assets/images/CategoryImgs/Ellipse17ctgryBreads.png")}
+              source={require("../assets/images/CategoryImgs/Ellipse21ctgryFruits.png")}
               style={styles.categoryImage}
             />
             <PoppinsText style={styles.categoryTitle}>Fruits</PoppinsText>
           </View>
         </ScrollView>
       </View>
-
+      <View style={styles.separator}></View>
       {/* vertically scrollable product list */}
       <ScrollView style={styles.productList}>
-        <View style={styles.productItem}>
-          <Image
-            source={require("../assets/images/ItemImgs/Ellipse 22ItemWwBb.svg")}
-            style={styles.productImage}
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
           />
-          <View style={styles.productInfo}>
-            <PoppinsText style={styles.productTitle}>Product 1</PoppinsText>
-            <PoppinsText style={styles.productPrice}>Rs. 100</PoppinsText>
-            <Picker
-              style={styles.productQuantity}
-              selectedValue={1}
-              onValueChange={(itemValue, itemIndex) => {}}>
-              <Picker.Item
-                label='1'
-                value={1}
-              />
-              <Picker.Item
-                label='2'
-                value={2}
-              />
-              <Picker.Item
-                label='3'
-                value={3}
-              />
-              <Picker.Item
-                label='4'
-                value={4}
-              />
-              <Picker.Item
-                label='5'
-                value={5}
-              />
-            </Picker>
-          </View>
-          <View style={styles.productButton}>
-            <PoppinsText style={styles.productButtonPoppinsText}>
-              Add
-            </PoppinsText>
-          </View>
-        </View>
-        <View style={styles.productItem}>
-          <Image
-            source={require("../assets/images/ItemImgs/Ellipse 22ItemWwBb.svg")}
-            style={styles.productImage}
-          />
-          <View style={styles.productInfo}>
-            <PoppinsText style={styles.productTitle}>Product 2</PoppinsText>
-            <PoppinsText style={styles.productPrice}>Rs. 200</PoppinsText>
-            <Picker
-              style={styles.productQuantity}
-              selectedValue={1}
-              onValueChange={(itemValue, itemIndex) => {}}>
-              <Picker.Item
-                label='1'
-                value={1}
-              />
-              <Picker.Item
-                label='2'
-                value={2}
-              />
-              <Picker.Item
-                label='3'
-                value={3}
-              />
-              <Picker.Item
-                label='4'
-                value={4}
-              />
-              <Picker.Item
-                label='5'
-                value={5}
-              />
-            </Picker>
-          </View>
-          <View style={styles.productButton}>
-            <PoppinsText style={styles.productButtonPoppinsText}>
-              Add
-            </PoppinsText>
-          </View>
-        </View>
-        <View style={styles.productItem}>
-          <Image
-            source={require("../assets/images/ItemImgs/Ellipse 22ItemWwBb.svg")}
-            style={styles.productImage}
-          />
-          <View style={styles.productInfo}>
-            <PoppinsText style={styles.productTitle}>Product 3</PoppinsText>
-            <PoppinsText style={styles.productPrice}>Rs. 300</PoppinsText>
-            <Picker
-              style={styles.productQuantity}
-              selectedValue={1}
-              onValueChange={(itemValue, itemIndex) => {}}>
-              <Picker.Item
-                label='1'
-                value={1}
-              />
-              <Picker.Item
-                label='2'
-                value={2}
-              />
-              <Picker.Item
-                label='3'
-                value={3}
-              />
-              <Picker.Item
-                label='4'
-                value={4}
-              />
-              <Picker.Item
-                label='5'
-                value={5}
-              />
-            </Picker>
-          </View>
-          <View style={styles.productButton}>
-            <PoppinsText style={styles.productButtonPoppinsText}>
-              +Add
-            </PoppinsText>
-          </View>
-        </View>
+        ))}
       </ScrollView>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
@@ -186,7 +75,6 @@ export default function ModalScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "red",
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
@@ -196,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 30,
+    backgroundColor: "lightgrey",
     height: 2,
     width: "90%",
   },
@@ -249,7 +137,7 @@ const styles = StyleSheet.create({
   },
   productTitle: {
     fontSize: 14,
-    fontWeight: "normal",
+    fontWeight: "bold",
   },
   productPrice: {
     fontSize: 16,
@@ -261,7 +149,6 @@ const styles = StyleSheet.create({
     height: 30,
   },
   productButton: {
-    // backgroundColor: "yellow",
     color: "#06D6A0",
     borderRadius: 30,
     paddingHorizontal: 10,

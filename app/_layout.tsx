@@ -12,7 +12,9 @@ import { Pressable, useColorScheme } from "react-native";
 import Colors from "../constants/Colors";
 import { Text } from "../components/Themed";
 import { SearchBar } from "react-native-screens";
-import { PoppinsText } from "../components/StyledText";
+import { CartContext } from "../features/cart/context/cardContext";
+import { Product } from "../types/products";
+import CartIcon from "../features/cart/components/CartIcon/CartIcon";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,73 +55,44 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name='(tabs)'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='modal'
-          options={{
-            headerTitle: () =>
-              isSearchBarOpen ? (
-                <SearchBar placeholder='search here...' />
-              ) : (
-                <PoppinsText>Products</PoppinsText>
-              ),
-            // title: isSearchBarOpen ? "" : "Products",
-            presentation: "modal",
-            headerRight: () => (
-              <>
-                <Pressable onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name='search'
-                      size={25}
-                      color={Colors[colorScheme ?? "light"].text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-                <SearchBar placeholder='search here' />
-                <Link to='/cart'>
-                  <Pressable>
+      <CartContext.Provider value={{ cartItems, setCartItems }}>
+        <Stack>
+          <Stack.Screen
+            name='(tabs)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='modal'
+            options={{
+              title: isSearchBarOpen ? "" : "Products",
+              presentation: "modal",
+              headerRight: () => (
+                <>
+                  <Pressable
+                    onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}>
                     {({ pressed }) => (
                       <FontAwesome
-                        name='shopping-cart'
+                        name='search'
                         size={25}
                         color={Colors[colorScheme ?? "light"].text}
                         style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                       />
                     )}
                   </Pressable>
-                </Link>
-                <Text
-                  style={{
-                    position: "absolute",
-                    height: 16,
-                    width: 16,
-                    top: -3,
-                    right: 0,
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "bold",
-                    color: "#fff",
-                    backgroundColor: "#FFA347",
-                    borderRadius: 50,
-                  }}>
-                  5
-                </Text>
-              </>
-            ),
-          }}
-        />
-      </Stack>
+                  <SearchBar placeholder='search here' />
+                  <CartIcon />
+                </>
+              ),
+            }}
+          />
+        </Stack>
+      </CartContext.Provider>
     </ThemeProvider>
   );
 }

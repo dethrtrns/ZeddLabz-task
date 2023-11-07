@@ -1,7 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-
-import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { Link } from "expo-router";
 import Colors from "../../constants/Colors";
@@ -25,7 +23,7 @@ export default function TabOneScreen() {
                   color: "red",
                   textAlign: "center",
                 }}>
-                cleck below icon to shop for all your grocery needs!
+                click here to shop for all your grocery needs!
               </Text>
               <FontAwesome
                 name='shopping-bag'
