@@ -5,6 +5,8 @@ import { Text, View } from "../components/Themed";
 import { Link } from "expo-router";
 import Colors from "../constants/Colors";
 
+//FIXME: the app router doesn't work as expected(as in the emulator) on the android build apk
+
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
@@ -21,7 +23,7 @@ export default function TabOneScreen() {
             <>
               <Text
                 style={{
-                  color: "red",
+                  color: Colors.primary,
                   textAlign: "center",
                 }}>
                 click here to shop for all your grocery needs!
